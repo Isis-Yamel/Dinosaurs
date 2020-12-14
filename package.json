@@ -1,0 +1,37 @@
+{
+    "name": "dinosaurs",
+    "version": "1.0.0",
+    "description": "## Student Instructions",
+    "main": "app.js",
+    "devServer": {
+        "host": "CO-IT008515",
+        "port": 8080
+    },
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "build": "NODE_ENV='production' webpack",
+        "start": "webpack-dev-server --open --progress --watch"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Isis-Yamel/Dinosaurs.git"
+    },
+    "author": "Isis-Yamel",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/Isis-Yamel/Dinosaurs/issues"
+    },
+    "homepage": "https://github.com/Isis-Yamel/Dinosaurs#readme",
+    "devDependencies": {
+        "@babel/core": "^7.12.10",
+        "@babel/preset-env": "^7.12.11",
+        "babel-loader": "^8.2.2",
+        "css-loader": "^3.6.0",
+        "file-loader": "^6.2.0",
+        "html-webpack-plugin": "^4.5.0",
+        "mini-css-extract-plugin": "^0.9.0",
+        "webpack": "^4.44.2",
+        "webpack-cli": "^3.3.12",
+        "webpack-dev-server": "^3.11.0"
+    }
+}
