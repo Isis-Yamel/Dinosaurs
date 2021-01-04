@@ -1,5 +1,7 @@
 // import dino data
 import info from './dino.json';
+// import facts
+import facts from './facts';
 
 // Create Dino Constructor
 function Specie(data) {
@@ -8,6 +10,8 @@ function Specie(data) {
   this.weight = data.weight;
   this.diet = data.diet;
   this.height = data.height;
+  this.where = data.where;
+  this.when = data.when;
   this.fact = data.fact;
 }
 
@@ -25,9 +29,18 @@ const compareWeight = (item) => (item.weight > 100 ? `${item.species} you are eq
 // Create Dino Compare Method 3
 const compareOriginalFact = (item) => item.fact;
 
+// Create Dino Compare Method 4
+const factsFactory = () => facts[Math.floor(Math.random() * facts.length)];
+
+// Create Dino Compare Method 5
+const compareWhere = (item) => (item.where === 'North America' ? 'You just born in dinosaurs territory' : `${item.where} is a really nice place`);
+
+// Create Dino Compare Method 6
+const compareWhen = (item) => (item.when === 'Holocene' ? 'Your name is probably Emily' : `${item.when} what a period!`);
+
 // Obtain random fact
 const getFact = (item) => {
-  const RANDOM_KEY = Math.floor(Math.random() * (3 - 1 + 1)) + 1;
+  const RANDOM_KEY = Math.floor(Math.random() * (5 - 1 + 1)) + 1;
   let fact;
 
   switch (RANDOM_KEY) {
@@ -41,7 +54,13 @@ const getFact = (item) => {
       fact = compareOriginalFact(item);
       break;
     case 3:
-      fact = compareWeight(item);
+      fact = factsFactory();
+      break;
+    case 4:
+      fact = compareWhere(item);
+      break;
+    case 5:
+      fact = compareWhen(item);
       break;
     default:
       break;
@@ -98,6 +117,8 @@ const GET_HUMAN_DATA = (function getData() {
   const inches = document.getElementById('inches');
   const weight = document.getElementById('weight');
   const diet = document.getElementById('diet');
+  const where = document.getElementById('where');
+  const when = document.getElementById('when');
 
   function getHumanName() {
     return name.value;
@@ -115,26 +136,43 @@ const GET_HUMAN_DATA = (function getData() {
     return diet.value;
   }
 
+  function getHumanWhere() {
+    return where.value;
+  }
+
+  function getHumanWhen() {
+    return when.value;
+  }
+
   return {
     getHumanName,
     getHumanHeight,
     getHumanWeight,
     getHumanDiet,
+    getHumanWhere,
+    getHumanWhen,
   };
 }());
 
 // On button click, prepare and display infographic
 document.getElementById('btn').addEventListener('click', () => {
-  replaceContent();
+  // Validate all fields content
+  if (GET_HUMAN_DATA.getHumanName() === '' || GET_HUMAN_DATA.getHumanWeight() === '' || GET_HUMAN_DATA.getHumanDiet() === '' || GET_HUMAN_DATA.getHumanHeight() === '' || GET_HUMAN_DATA.getHumanWhen() === '' || GET_HUMAN_DATA.getHumanWhere() === '') {
+    alert('All fields are required!');
+  } else {
+    replaceContent();
 
-  const user = new Specie({
-    species: 'Human',
-    name: GET_HUMAN_DATA.getHumanName(),
-    weight: GET_HUMAN_DATA.getHumanWeight(),
-    diet: GET_HUMAN_DATA.getHumanDiet(),
-    height: GET_HUMAN_DATA.getHumanHeight(),
-    fact: 'It has been estimated that humans use only 10% of their brain',
-  });
+    const USER = new Specie({
+      species: 'Human',
+      name: GET_HUMAN_DATA.getHumanName(),
+      weight: GET_HUMAN_DATA.getHumanWeight(),
+      diet: GET_HUMAN_DATA.getHumanDiet(),
+      height: GET_HUMAN_DATA.getHumanHeight(),
+      where: GET_HUMAN_DATA.getHumanWhere(),
+      when: GET_HUMAN_DATA.getHumanWhen(),
+      fact: 'It has been estimated that humans use only 10% of their brain',
+    });
 
-  createTiles(CREATED_DINOS, user);
+    createTiles(CREATED_DINOS, USER);
+  }
 });
