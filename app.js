@@ -42,6 +42,7 @@ const compareWhen = (item) => (item.when === 'Holocene' ? 'Your name is probably
 // Obtain random fact
 const getFact = (item) => {
   // generate random number : https://stackoverflow.com/questions/4959975/generate-random-number-between-two-numbers-in-javascript
+  // random switch case : https://stackoverflow.com/a/49081914
   const RANDOM_KEY = Math.floor(Math.random() * (5 - 1 + 1)) + 1;
   let fact;
 
@@ -113,6 +114,7 @@ const replaceContent = () => {
 const getHeight = (feet, inches) => (feet * 12) + inches;
 
 // Use IIFE to get human data from form
+// For IIFE validation I check this repo fork from udacity project https://github.com/sreejithvs333/Javascript/blob/master/app.js
 const GET_HUMAN_DATA = (function getData() {
   const name = document.getElementById('name');
   const feet = document.getElementById('feet');
