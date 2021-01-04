@@ -2,7 +2,7 @@
 
 ## Student Instructions
 
-###To install this project
+### To install this project
 
 1. First clone the repository
  * HTTP: https://github.com/Isis-Yamel/Dinosaurs.git
