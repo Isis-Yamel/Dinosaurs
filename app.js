@@ -4,6 +4,7 @@ import info from './dino.json';
 // Create Dino Constructor
 function Specie(data) {
   this.species = data.species;
+  this.name = data.name;
   this.weight = data.weight;
   this.diet = data.diet;
   this.height = data.height;
@@ -12,18 +13,7 @@ function Specie(data) {
 
 // Create Dino Objects
 const dinoFactory = (dino) => dino.map((i) => new Specie(i));
-
 const CREATED_DINOS = dinoFactory(info.Dinos);
-
-// Create Human Object
-const user = new Specie({
-  species: 'Human',
-  name: '',
-  weight: '',
-  diet: '',
-  height: '',
-  fact: 'It has been estimated that humans use only 10% of their brain',
-});
 
 // *NOTE: Weight in JSON file is in lbs, height in inches.
 // Create Dino Compare Method 1
@@ -73,7 +63,7 @@ const buildTiles = (content) => {
 };
 
 // Generate Tiles for each Dino in Array
-const createTiles = (createdDinos) => {
+const createTiles = (createdDinos, user) => {
   randomGenerator(createdDinos);
   createdDinos.splice(4, 0, user);
   let content = '';
@@ -98,16 +88,53 @@ const replaceContent = () => {
   document.getElementById('dino-compare').style.display = 'none';
 };
 
+// Calculate heigh in inches
+const getHeight = (feet, inches) => (feet * 12) + inches;
+
 // Use IIFE to get human data from form
-// On button click, prepare and display infographic
-(function getHumanData() {
-  document.getElementById('btn').addEventListener('click', () => {
-    replaceContent();
-    user.name = document.getElementById('name').value;
-    user.height = parseFloat(document.getElementById('feet').value) * 12
-      + parseFloat(document.getElementById('inches').value);
-    user.weight = parseFloat(document.getElementById('weight').value);
-    user.diet = document.getElementById('diet').value;
-    createTiles(CREATED_DINOS);
-  });
+const GET_HUMAN_DATA = (function getData() {
+  const name = document.getElementById('name');
+  const feet = document.getElementById('feet');
+  const inches = document.getElementById('inches');
+  const weight = document.getElementById('weight');
+  const diet = document.getElementById('diet');
+
+  function getHumanName() {
+    return name.value;
+  }
+
+  function getHumanHeight() {
+    return getHeight(feet.value, inches.value);
+  }
+
+  function getHumanWeight() {
+    return weight.value;
+  }
+
+  function getHumanDiet() {
+    return diet.value;
+  }
+
+  return {
+    getHumanName,
+    getHumanHeight,
+    getHumanWeight,
+    getHumanDiet,
+  };
 }());
+
+// On button click, prepare and display infographic
+document.getElementById('btn').addEventListener('click', () => {
+  replaceContent();
+
+  const user = new Specie({
+    species: 'Human',
+    name: GET_HUMAN_DATA.getHumanName(),
+    weight: GET_HUMAN_DATA.getHumanWeight(),
+    diet: GET_HUMAN_DATA.getHumanDiet(),
+    height: GET_HUMAN_DATA.getHumanHeight(),
+    fact: 'It has been estimated that humans use only 10% of their brain',
+  });
+
+  createTiles(CREATED_DINOS, user);
+});
