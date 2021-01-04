@@ -21,10 +21,10 @@ const CREATED_DINOS = dinoFactory(info.Dinos);
 
 // *NOTE: Weight in JSON file is in lbs, height in inches.
 // Create Dino Compare Method 1
-const compareHeight = (item) => (item.height > 63 ? `${item.species}, you are like a Anklyosaurus height!` : `${item.species}'s height is about 6 pigeons`);
+const compareHeight = (item, user) => (item.height > user.height ? `${item.species}, ${user.name} is an ant for you!` : `${item.species}'s height is close to ${user.name}`);
 
 // Create Dino Compare Method 2
-const compareWeight = (item) => (item.weight > 100 ? `${item.species} you are equivalent to 700 Brachiosaurus` : `${item.species} are you a feather?`);
+const compareWeight = (item, user) => (item.weight > user.weight ? `${item.species} eats like a entire city of ${user.name}s` : `${item.species} in pounds, you are equivalent to ${user.name} `);
 
 // Create Dino Compare Method 3
 const compareOriginalFact = (item) => item.fact;
@@ -34,13 +34,13 @@ const compareOriginalFact = (item) => item.fact;
 const factsFactory = () => facts[Math.floor(Math.random() * facts.length)];
 
 // Create Dino Compare Method 5
-const compareWhere = (item) => (item.where === 'North America' ? 'You just born in dinosaurs territory' : `${item.where} is a really nice place`);
+const compareWhere = (item, user) => (item.where === user.where ? `${item.species}, you share origin with this human ${user.name}` : `${item.species} you would love to visit ${user.name}'s territory: ${user.where}`);
 
 // Create Dino Compare Method 6
-const compareWhen = (item) => (item.when === 'Holocene' ? 'Your name is probably Emily' : `${item.when} what a period!`);
+const compareWhen = (item, user) => (item.when === user.when ? `${item.species} you share period with ${user.name}. Very suspicious!` : `${item.species} probably this human ${user.name} don't even know about your period: ${item.when}!`);
 
 // Obtain random fact
-const getFact = (item) => {
+const getFact = (item, user) => {
   // generate random number : https://stackoverflow.com/questions/4959975/generate-random-number-between-two-numbers-in-javascript
   // random switch case : https://stackoverflow.com/a/49081914
   const RANDOM_KEY = Math.floor(Math.random() * (5 - 1 + 1)) + 1;
@@ -48,10 +48,10 @@ const getFact = (item) => {
 
   switch (RANDOM_KEY) {
     case 0:
-      fact = compareHeight(item);
+      fact = compareHeight(item, user);
       break;
     case 1:
-      fact = compareWeight(item);
+      fact = compareWeight(item, user);
       break;
     case 2:
       fact = compareOriginalFact(item);
@@ -60,10 +60,10 @@ const getFact = (item) => {
       fact = factsFactory();
       break;
     case 4:
-      fact = compareWhere(item);
+      fact = compareWhere(item, user);
       break;
     case 5:
-      fact = compareWhen(item);
+      fact = compareWhen(item, user);
       break;
     default:
       break;
@@ -92,7 +92,8 @@ const createTiles = (createdDinos, user) => {
 
   createdDinos.forEach((item) => {
     const NAME = getName(item);
-    const FACT = item.species === 'Pigeon' ? item.fact : getFact(item);
+    const GET_FACT = item.species === 'Pigeon' ? item.fact : getFact(item, user);
+    const FACT = item.species === 'Human' ? '' : GET_FACT;
 
     content
     += `<div class="grid-item">
