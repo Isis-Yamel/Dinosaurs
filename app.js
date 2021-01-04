@@ -30,6 +30,7 @@ const compareWeight = (item) => (item.weight > 100 ? `${item.species} you are eq
 const compareOriginalFact = (item) => item.fact;
 
 // Create Dino Compare Method 4
+// Return one item : https://www.geeksforgeeks.org/how-to-select-a-random-element-from-array-in-javascript/
 const factsFactory = () => facts[Math.floor(Math.random() * facts.length)];
 
 // Create Dino Compare Method 5
@@ -40,6 +41,7 @@ const compareWhen = (item) => (item.when === 'Holocene' ? 'Your name is probably
 
 // Obtain random fact
 const getFact = (item) => {
+  // generate random number : https://stackoverflow.com/questions/4959975/generate-random-number-between-two-numbers-in-javascript
   const RANDOM_KEY = Math.floor(Math.random() * (5 - 1 + 1)) + 1;
   let fact;
 
@@ -107,7 +109,7 @@ const replaceContent = () => {
   document.getElementById('dino-compare').style.display = 'none';
 };
 
-// Calculate heigh in inches
+// Calculate heigh in inches. Formula : https://www.metric-conversions.org/length/feet-to-inches.htm
 const getHeight = (feet, inches) => (feet * 12) + inches;
 
 // Use IIFE to get human data from form
@@ -157,6 +159,7 @@ const GET_HUMAN_DATA = (function getData() {
 // On button click, prepare and display infographic
 document.getElementById('btn').addEventListener('click', () => {
   // Validate all fields content
+  // I do review this answer to make this validation https://stackoverflow.com/questions/25311923/javascript-validation-for-all-field-with-required-attribute
   if (GET_HUMAN_DATA.getHumanName() === '' || GET_HUMAN_DATA.getHumanWeight() === '' || GET_HUMAN_DATA.getHumanDiet() === '' || GET_HUMAN_DATA.getHumanHeight() === '' || GET_HUMAN_DATA.getHumanWhen() === '' || GET_HUMAN_DATA.getHumanWhere() === '') {
     alert('All fields are required!');
   } else {
