@@ -20,24 +20,37 @@ const dinoFactory = (dino) => dino.map((i) => new Specie(i));
 const CREATED_DINOS = dinoFactory(info.Dinos);
 
 // *NOTE: Weight in JSON file is in lbs, height in inches.
+// Methods were created based on Protoypal Inheritance lessons from Udacity Nanodegree
 // Create Dino Compare Method 1
-const compareHeight = (item, user) => (item.height > user.height ? `${item.species}, ${user.name} is an ant for you!` : `${item.species}'s height is close to ${user.name}`);
+Specie.prototype.compareHeight = function height(user) {
+  return (this.height > user.height ? `${this.species}, ${user.name} is an ant for you!` : `${this.species}'s height is close to ${user.name}`);
+};
 
 // Create Dino Compare Method 2
-const compareWeight = (item, user) => (item.weight > user.weight ? `${item.species} eats like a entire city of ${user.name}s` : `${item.species} in pounds, you are equivalent to ${user.name} `);
+Specie.prototype.compareWeight = function weight(user) {
+  return (this.weight > user.weight ? `${this.species} eats like a entire city of ${user.name}s` : `${this.species} in pounds, you are equivalent to ${user.name}`);
+};
 
 // Create Dino Compare Method 3
-const compareOriginalFact = (item) => item.fact;
+Specie.prototype.compareOriginalFact = function original(user) {
+  return `This human, ${user.name}, kinda boring. Here something about you: ${this.fact}`;
+};
 
 // Create Dino Compare Method 4
 // Return one item : https://www.geeksforgeeks.org/how-to-select-a-random-element-from-array-in-javascript/
-const factsFactory = () => facts[Math.floor(Math.random() * facts.length)];
-
+Specie.prototype.factsFactory = function funnyFacts(user) {
+  const funnyFact = facts[Math.floor(Math.random() * facts.length)];
+  return `Here is a funny fact about ${user.species}: ${funnyFact}`;
+};
 // Create Dino Compare Method 5
-const compareWhere = (item, user) => (item.where === user.where ? `${item.species}, you share origin with this human ${user.name}` : `${item.species} you would love to visit ${user.name}'s territory: ${user.where}`);
+Specie.prototype.compareWhere = function where(user) {
+  return (this.where === user.where ? `${this.species}, you share origin with this human ${user.name}` : `${this.species} you would love to visit ${user.name}'s territory: ${user.where}`);
+};
 
 // Create Dino Compare Method 6
-const compareWhen = (item, user) => (item.when === user.when ? `${item.species} you share period with ${user.name}. Very suspicious!` : `${item.species} probably this human ${user.name} don't even know about your period: ${item.when}!`);
+Specie.prototype.compareWhen = function when(user) {
+  return (this.when === user.when ? `${this.species} you share period with ${user.name}. Very suspicious!` : `${this.species} probably this human ${user.name} don't even know about your period: ${this.when}!`);
+};
 
 // Obtain random fact
 const getFact = (item, user) => {
@@ -48,22 +61,22 @@ const getFact = (item, user) => {
 
   switch (RANDOM_KEY) {
     case 0:
-      fact = compareHeight(item, user);
+      fact = item.compareHeight(user);
       break;
     case 1:
-      fact = compareWeight(item, user);
+      fact = item.compareWeight(user);
       break;
     case 2:
-      fact = compareOriginalFact(item);
+      fact = item.compareOriginalFact(user);
       break;
     case 3:
-      fact = factsFactory();
+      fact = item.factsFactory(user);
       break;
     case 4:
-      fact = compareWhere(item, user);
+      fact = item.compareWhere(user);
       break;
     case 5:
-      fact = compareWhen(item, user);
+      fact = item.compareWhen(user);
       break;
     default:
       break;
